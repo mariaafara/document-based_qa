@@ -1,0 +1,7 @@
+langchain
+sentence_transformers
+faiss-cpu
+chromadb
+python-multipart
+uvicorn
+BeautifulSoup4
