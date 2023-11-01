@@ -26,10 +26,16 @@ document-based question answering.
    cd models/
    ```
 
+    Embedding:
    ```bash
-   git clone https://huggingface.co/google/mt5-small
+   git clone https://huggingface.co/sentence-transformers/all-mpnet-base-v2
    ```
-
+    or 
+   ```bash
+   git clone https://huggingface.co/hkunlp/instructor-base
+   ```
+   
+    LLM:
    ```bash
    git clone https://huggingface.co/pszemraj/flan-t5-large-instruct-dolly_hhrlhf
    ```
@@ -37,7 +43,7 @@ document-based question answering.
 3. Lunch the API
 
    ```bash
-   uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+   uvicorn main:app --host 0.0.0.0 --port 8000
    ```
 
 # API Endpoints

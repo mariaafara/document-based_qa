@@ -26,7 +26,7 @@ async def startup_event():
         logger.info("Loading embedder...")
         # Initialize the HuggingFaceEmbeddings
         if embedding == "instructor":
-            app.state.embedder = HuggingFaceInstructEmbeddings(model_name="instructor-base",
+            app.state.embedder = HuggingFaceInstructEmbeddings(model_name="models/instructor-base",
                                                                model_kwargs={"device": "cpu"})  # cuda
         else:
             app.state.embedder = HuggingFaceEmbeddings(
@@ -43,9 +43,9 @@ async def startup_event():
         logger.info("Loading llm... ")
         # Initialize the HuggingFacePipeline
         app.state.llm = HuggingFacePipeline.from_model_id(
-            model_id="models/mt5-small",
+            model_id="models/flan-t5-large-instruct-dolly_hhrlhf",
             task="text2text-generation",
-            pipeline_kwargs={"max_new_tokens": 512},
+            pipeline_kwargs={"max_new_tokens": 64},
         )
         logger.info("LLM loaded successfully")
     except Exception as e:
