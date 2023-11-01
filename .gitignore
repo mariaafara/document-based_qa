@@ -1,2 +1,4 @@
 drafts
 models/
+.idea/
+__pycache__/
