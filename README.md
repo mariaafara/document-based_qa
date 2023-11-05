@@ -20,25 +20,33 @@ document-based question answering.
    ```
 
 2. Install models locally
- 
+
    ```bash
    mkdir models
-   cd models/
    ```
 
-    Embedding:
+Embedding:
+
    ```bash
+   cd models/
    git clone https://huggingface.co/sentence-transformers/all-mpnet-base-v2
    ```
+
     or 
+
    ```bash
+   cd models/
    git clone https://huggingface.co/hkunlp/instructor-base
    ```
-   
-    LLM:
+
+LLM:
+
    ```bash
+   cd models/
    git clone https://huggingface.co/pszemraj/flan-t5-large-instruct-dolly_hhrlhf
    ```
+
+Please install `git-lfs` and run `git lfs install` followed by `git lfs pull` in the folder you cloned.
 
 3. Lunch the API
 
@@ -48,7 +56,8 @@ document-based question answering.
 
 # API Endpoints
 
-- /upload_document/: Upload a document from a URL and initialize the Document-Based QA instance with the chosen vector store.
+- /upload_document/: Upload a document from a URL and initialize the Document-Based QA instance with the chosen vector
+  store.
 
       Query Parameter:
          document_url: URL of the document to load.

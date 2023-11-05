@@ -5,3 +5,4 @@ chromadb
 python-multipart
 uvicorn
 BeautifulSoup4
+InstructorEmbedding

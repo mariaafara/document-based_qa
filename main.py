@@ -8,7 +8,6 @@ from langchain.llms import HuggingFacePipeline
 from enum import Enum
 from langchain.embeddings import HuggingFaceInstructEmbeddings
 from langchain.embeddings import HuggingFaceEmbeddings
-import os
 import time
 
 
@@ -45,7 +44,7 @@ async def startup_event():
         app.state.llm = HuggingFacePipeline.from_model_id(
             model_id="models/flan-t5-large-instruct-dolly_hhrlhf",
             task="text2text-generation",
-            pipeline_kwargs={"max_new_tokens": 64},
+            pipeline_kwargs={"max_new_tokens": 512},
         )
         logger.info("LLM loaded successfully")
     except Exception as e:
@@ -129,8 +128,3 @@ def ask_question(query: str = Form(...),
                  ):
     response = perform_question(query, method)
     return response
-
-# if __name__ == "__main__":
-#     import uvicorn
-#
-#     uvicorn.run(app, host="0.0.0.0", port=8000)
