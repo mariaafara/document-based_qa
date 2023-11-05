@@ -2,3 +2,6 @@ drafts
 models/
 .idea/
 __pycache__/
+.env
+*.egg*
+*vector_store
