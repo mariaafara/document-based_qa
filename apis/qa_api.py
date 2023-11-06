@@ -59,18 +59,20 @@ class VectorStoreEnum(str, Enum):
 @qa_app.post("/ask_question/", response_model=QuestionResponse)
 def ask_question(query: str = Form(...), method: MethodEnum = Query(..., description="Method for question answering"),
                  vector_store_path: str = Query(None, description="Path to the vector store"),
-                 vector_store_type: VectorStoreEnum = Query(..., description="VectorStore for question answering")
+                 vector_store_type: str = Query(..., description="VectorStore for question answering")
                  ):
+    print("in ask question route...")
     # load vector store
     question_answering = QuestionAnswering(qa_app.state.llm,
                                            vector_store_path=vector_store_path,
                                            embedder=qa_app.state.embedder,
                                            vector_store_type=vector_store_type)
     answer = question_answering.perform_qa(query, method)
+    print("*"*5, answer)
     return {"answer": answer}
 
 
-if __name__ == "__main__":
-    import uvicorn
-
-    uvicorn.run(qa_app, host="0.0.0.0", port=8001)
+# if __name__ == "__main__":
+#     import uvicorn
+#
+#     uvicorn.run(qa_app, host="0.0.0.0", port=8001)

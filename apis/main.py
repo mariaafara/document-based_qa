@@ -74,18 +74,21 @@ async def upload_document(document_url: str,
 
 
 async def ask_question_to_qa_api(query: str, method: MethodEnum, vector_store_path: str,
-                                 vector_store_type: VectorStoreEnum):
+                                 vector_store_type: str):
     async with httpx.AsyncClient() as client:
-        response = await client.post("https://0.0.0.0/8001", json={"query": query, "method": method,
-                                                                  "vector_store_path": vector_store_path,
-                                                                  "vector_store_type": vector_store_type,
-                                                                  })
+        response = await client.post("http://0.0.0.0:8001/ask_question/", json={"query": query,
+                                                                                "method": method,
+                                                                                "vector_store_path": vector_store_path,
+                                                                                "vector_store_type": vector_store_type,
+                                                                                })
+        print("*" * 5, response)
         return response.json()
 
 
 @app.post("/ask_question/")
-async def ask_question(query: str = Form(...), method: MethodEnum = Query(..., description="Method for question answering"),
-                 ):
+async def ask_question(query: str = Form(...),
+                       method: MethodEnum = Query(..., description="Method for question answering"),
+                       ):
     response = await ask_question_to_qa_api(query, method, document_indexer.vector_store_path,
-                                      document_indexer.vector_store_type)
+                                            document_indexer.vector_store_type)
     return response

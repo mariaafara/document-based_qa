@@ -41,11 +41,15 @@ class DocumentIndexer:
         print(f"Initializing {vector_store_type} vectorstore ...")
 
         if self.texts is not None and self.instructor_embeddings is not None:
+            vector_store_path = "vector_store"
+
             start_time = time.time()
             if vector_store_type == "FAISS":
                 self.vectorstore = FAISS.from_documents(self.texts, self.instructor_embeddings)
+                self.vectorstore.save_local(vector_store_path)
             elif vector_store_type == "Chroma":
-                self.vectorstore = Chroma.from_documents(self.texts, self.instructor_embeddings)
+                self.vectorstore = Chroma.from_documents(self.texts, self.instructor_embeddings,
+                                                         persist_directory=vector_store_path)
             else:
                 raise ValueError("Invalid vector store type. Use 'FAISS' or 'Chroma'.")
 
@@ -54,8 +58,7 @@ class DocumentIndexer:
 
             print(f"Initialized {vector_store_type} vectorstore")
             print(f"Time taken for vectorstore initialization: {vectorstore_initialization_time} seconds")
-            vector_store_path = "vector_store"
-            self.vectorstore.save_local(vector_store_path)
+
             return vector_store_path
 
     def get_vectorstore(self):

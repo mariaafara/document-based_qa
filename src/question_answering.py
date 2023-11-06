@@ -3,13 +3,14 @@ from langchain.chains.question_answering import load_qa_chain
 
 from langchain.vectorstores import FAISS, Chroma
 
+
 class QuestionAnswering:
-    def __init__(self, llm, vectore_store_type, vector_store_path, embedder, vector_store_type):
+    def __init__(self, llm, vector_store_type, vector_store_path, embedder):
         self.llm = llm
         if vector_store_type == "FAISS":
             vector_store = FAISS.load_local(vector_store_path, embedder)
         else:
-            vector_store = Chroma.load_local(vector_store_path, embedder)
+            vector_store = Chroma(embedding_function=embedder, persist_directory=vector_store_path)
 
         self.retriever = vector_store.as_retriever(search_kwargs={"k": 3})
 
